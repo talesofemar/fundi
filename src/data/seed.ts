@@ -1,0 +1,352 @@
+import type { AppState, PortfolioProject, UserProfile } from '../types'
+import { daysFromNow, todayISO, uid } from '../lib/format'
+
+export const CATEGORIES = [
+  'Builders',
+  'Carpenters',
+  'Tailors',
+  'Electricians',
+  'Plumbers',
+  'Mechanics',
+  'Welders',
+  'Painters',
+  'Tilers',
+  'Cleaners',
+  'Phone repair',
+  'Other services',
+] as const
+
+export const TRADES = [
+  'Builder',
+  'Carpenter',
+  'Tailor',
+  'Electrician',
+  'Plumber',
+  'Mechanic',
+  'Welder',
+  'Painter',
+  'Tiler',
+  'Phone repair technician',
+  'Hairdresser / salon',
+  'Cleaner',
+  'Photographer',
+  'Other',
+] as const
+
+const DEMO_CUSTOMER_ID = 'cust_demo_sarah'
+const WORKER_KATO = 'wrk_kato'
+const WORKER_AMINA = 'wrk_amina'
+const WORKER_BRIGHT = 'wrk_bright'
+const WORKER_SAFE = 'wrk_safewire'
+const WORKER_QUICK = 'wrk_quickfix'
+
+export const DEMO_WORKER_ID = WORKER_KATO
+export const DEMO_CUSTOMER = DEMO_CUSTOMER_ID
+
+function portfolio(
+  workerId: string,
+  title: string,
+  category: string,
+  description: string,
+  colors: [string, string],
+): PortfolioProject {
+  return {
+    id: uid('port'),
+    workerId,
+    title,
+    description,
+    category,
+    imageUrls: [
+      `https://placehold.co/600x400/${colors[0]}/${colors[1]}?text=${encodeURIComponent(title.split(' ')[0])}`,
+      `https://placehold.co/600x400/${colors[1]}/${colors[0]}?text=Detail`,
+    ],
+    completionDate: daysFromNow(-30),
+    publicVisibility: true,
+    testimonialText: undefined,
+    testimonialApproved: false,
+    area: 'Greater Kampala',
+    servicesPerformed: [category],
+  }
+}
+
+export function createSeedState(): AppState {
+  const workers: UserProfile[] = [
+    {
+      id: WORKER_KATO,
+      role: 'worker',
+      fullName: 'Kato Ssemakula',
+      businessName: 'Kato Woodcraft',
+      phone: '+256700000001',
+      trade: 'Carpenter',
+      bio: 'Custom furniture, wardrobes, and home fittings. Based in Wakiso with delivery around Kampala.',
+      district: 'Wakiso',
+      town: 'Nansana',
+      publicProfileEnabled: true,
+      services: ['Custom wardrobes', 'Beds & desks', 'Kitchen cabinets', 'Repairs'],
+      serviceAreas: ['Wakiso', 'Kampala', 'Entebbe'],
+      availability: 'Available for new work',
+      preferredContact: 'In-app',
+      priceGuidance: 'Wardrobes from UGX 1,200,000 (worker-provided guidance)',
+      createdAt: daysFromNow(-90),
+    },
+    {
+      id: WORKER_AMINA,
+      role: 'worker',
+      fullName: 'Amina Nalwanga',
+      businessName: 'Amina Works',
+      phone: '+256700000002',
+      trade: 'Tailor',
+      bio: 'Bridal wear, school uniforms, and alterations. Quick turnaround for Kampala clients.',
+      district: 'Kampala',
+      town: 'Wandegeya',
+      publicProfileEnabled: true,
+      services: ['Bridal gowns', 'Uniforms', 'Alterations', 'African print outfits'],
+      serviceAreas: ['Kampala', 'Wakiso'],
+      availability: 'Available for new work',
+      preferredContact: 'Either',
+      priceGuidance: 'Simple dresses from UGX 80,000',
+      createdAt: daysFromNow(-60),
+    },
+    {
+      id: WORKER_BRIGHT,
+      role: 'worker',
+      fullName: 'Bright Okello',
+      businessName: 'BrightBuild Services',
+      phone: '+256700000003',
+      trade: 'Builder',
+      bio: 'House extensions, plastering, and small commercial renovations in Mukono and nearby towns.',
+      district: 'Mukono',
+      town: 'Mukono Town',
+      publicProfileEnabled: true,
+      services: ['House extensions', 'Plastering', 'Slab casting', 'Renovations'],
+      serviceAreas: ['Mukono', 'Kampala', 'Jinja'],
+      availability: 'Busy',
+      preferredContact: 'Phone',
+      createdAt: daysFromNow(-120),
+    },
+    {
+      id: WORKER_SAFE,
+      role: 'worker',
+      fullName: 'Denis Mugisha',
+      businessName: 'SafeWire Electrical',
+      phone: '+256700000004',
+      trade: 'Electrician',
+      bio: 'Home wiring, socket upgrades, and solar basic installs. Safety-first work across Kampala.',
+      district: 'Kampala',
+      town: 'Ntinda',
+      publicProfileEnabled: true,
+      services: ['House wiring', 'Socket repairs', 'Lighting', 'Solar basics'],
+      serviceAreas: ['Kampala', 'Wakiso'],
+      availability: 'Available for new work',
+      preferredContact: 'In-app',
+      createdAt: daysFromNow(-45),
+    },
+    {
+      id: WORKER_QUICK,
+      role: 'worker',
+      fullName: 'Grace Namutebi',
+      businessName: 'QuickFix Plumbing',
+      phone: '+256700000005',
+      trade: 'Plumber',
+      bio: 'Leak repairs, bathroom fittings, and water tank installs. Serving Entebbe and nearby areas.',
+      district: 'Wakiso',
+      town: 'Entebbe',
+      publicProfileEnabled: true,
+      services: ['Leak repairs', 'Bathroom fittings', 'Tank installs', 'Blocked drains'],
+      serviceAreas: ['Entebbe', 'Kampala', 'Wakiso'],
+      availability: 'Available for new work',
+      preferredContact: 'Either',
+      createdAt: daysFromNow(-20),
+    },
+  ]
+
+  const customers: UserProfile[] = [
+    {
+      id: DEMO_CUSTOMER_ID,
+      role: 'customer',
+      fullName: 'Sarah Nakato',
+      phone: '+256700000100',
+      bio: 'Homeowner looking for reliable local skill.',
+      district: 'Kampala',
+      town: 'Kololo',
+      publicProfileEnabled: false,
+      services: [],
+      serviceAreas: [],
+      availability: 'Available for new work',
+      preferredContact: 'In-app',
+      createdAt: daysFromNow(-10),
+    },
+  ]
+
+  const portfolio: PortfolioProject[] = [
+    portfolio(WORKER_KATO, 'Three-door mahogany wardrobe', 'Carpenter', 'Custom wardrobe with drawers and hanging space for a Wakiso family home.', ['1B3A4B', 'F4F1EC']),
+    portfolio(WORKER_KATO, 'Office desks for a small shop', 'Carpenter', 'Two sturdy desks with cable holes and drawers.', ['2C4A3E', 'F8F6F2']),
+    portfolio(WORKER_AMINA, 'Bridal gown with kitenge accents', 'Tailor', 'Fitted gown with hand-finished details for a Kampala wedding.', ['8B3A2A', 'FDF8F4']),
+    portfolio(WORKER_AMINA, 'School uniform set', 'Tailor', 'Bulk uniform order for a nursery class.', ['3A5A7A', 'F5F7FA']),
+    portfolio(WORKER_BRIGHT, 'Two-room extension', 'Builder', 'Block extension with plastered walls and new roof section.', ['4A3A2A', 'F7F5F0']),
+    portfolio(WORKER_SAFE, 'Full flat rewiring', 'Electrician', 'Safe rewiring and new sockets for a rented flat in Ntinda.', ['1E3A5C', 'F4F7FB']),
+    portfolio(WORKER_QUICK, 'Bathroom pipe replacement', 'Plumber', 'Replaced leaking pipes and fitted a new shower mixer.', ['1A4A4A', 'F3F8F7']),
+  ]
+
+  return {
+    role: null,
+    currentUserId: null,
+    workers,
+    customers,
+    portfolio,
+    enquiries: [
+      {
+        id: 'enq_seed_1',
+        customerId: DEMO_CUSTOMER_ID,
+        customerName: 'Sarah Nakato',
+        workerId: WORKER_SAFE,
+        description: 'Need two extra sockets in the living room and a light switch replaced.',
+        location: 'Ntinda, Kampala',
+        preferredDate: daysFromNow(7),
+        imageUrls: [],
+        status: 'New',
+        createdAt: daysFromNow(-1),
+        reference: 'FQ-1042',
+      },
+    ],
+    quotations: [
+      {
+        id: 'quote_seed_1',
+        workerId: WORKER_KATO,
+        customerName: 'James Okello',
+        jobDescription: 'Repair dining table legs and polish surface',
+        lineItems: [
+          { id: 'li1', label: 'Wood glue & filler', amount: 45000, category: 'materials' },
+          { id: 'li2', label: 'Labour', amount: 120000, category: 'labour' },
+          { id: 'li3', label: 'Transport', amount: 20000, category: 'transport' },
+        ],
+        materialsTotal: 45000,
+        labourTotal: 120000,
+        transportTotal: 20000,
+        otherTotal: 0,
+        marginAmount: 15000,
+        grandTotal: 200000,
+        validUntil: daysFromNow(14),
+        expectedCompletion: '3 days after acceptance',
+        notes: 'Includes light polish. Deep refinish quoted separately.',
+        exclusions: 'Does not include full table rebuild.',
+        status: 'Shared',
+        createdAt: daysFromNow(-3),
+      },
+    ],
+    orders: [
+      {
+        id: 'ord_seed_1',
+        workerId: WORKER_KATO,
+        customerName: 'James Okello',
+        title: 'Dining table repair',
+        description: 'Repair dining table legs and polish surface',
+        quantity: '1 table',
+        deadline: daysFromNow(2),
+        quotedAmount: 200000,
+        status: 'In progress',
+        paymentStatus: 'Deposit paid',
+        location: 'Kasangati',
+        notes: 'Customer prefers Saturday delivery.',
+        activity: [
+          { at: daysFromNow(-3), text: 'Order created from shared quotation' },
+          { at: daysFromNow(-2), text: 'Deposit marked as paid (manual)' },
+        ],
+        createdAt: daysFromNow(-3),
+        quotationId: 'quote_seed_1',
+      },
+      {
+        id: 'ord_seed_2',
+        workerId: WORKER_KATO,
+        customerName: 'Mary Atim',
+        title: 'Kids study desk',
+        description: 'One study desk with drawer',
+        quantity: '1 desk',
+        deadline: todayISO(),
+        quotedAmount: 350000,
+        status: 'Awaiting payment',
+        paymentStatus: 'Not paid',
+        location: 'Nansana',
+        notes: '',
+        activity: [{ at: daysFromNow(-5), text: 'Order completed — waiting for payment confirmation' }],
+        createdAt: daysFromNow(-8),
+      },
+    ],
+    promises: [
+      {
+        id: 'prm_seed_1',
+        workerId: WORKER_KATO,
+        customerName: 'James Okello',
+        orderId: 'ord_seed_1',
+        action: 'Deliver repaired dining table',
+        dueAt: daysFromNow(2),
+        status: 'Due soon',
+        sourceText: 'I will deliver the repaired table by Saturday.',
+        createdAt: daysFromNow(-2),
+      },
+      {
+        id: 'prm_seed_2',
+        workerId: WORKER_KATO,
+        customerName: 'Mary Atim',
+        orderId: 'ord_seed_2',
+        action: 'Send payment reminder message',
+        dueAt: todayISO(),
+        status: 'Due today',
+        sourceText: 'Remind Mary about unpaid desk balance today.',
+        createdAt: daysFromNow(-1),
+      },
+    ],
+    savedWorkers: [],
+    voiceHistory: [],
+    messages: [
+      {
+        id: 'msg_1',
+        participantName: 'Kato Woodcraft',
+        roleSide: 'customer',
+        preview: 'Thanks for your request. I will prepare a quote.',
+        updatedAt: daysFromNow(-1),
+        unread: 1,
+        messages: [
+          {
+            id: 'm1',
+            from: 'them',
+            text: 'Thanks for your request. I will prepare a quote after I confirm the wardrobe size.',
+            at: daysFromNow(-1),
+          },
+        ],
+      },
+      {
+        id: 'msg_2',
+        participantName: 'Sarah Nakato',
+        roleSide: 'worker',
+        preview: 'Can you also add hanging space?',
+        updatedAt: daysFromNow(0),
+        unread: 0,
+        messages: [
+          {
+            id: 'm2',
+            from: 'them',
+            text: 'Can you also add hanging space on the left side?',
+            at: daysFromNow(0),
+          },
+        ],
+      },
+    ],
+    expenses: [
+      {
+        id: 'exp_1',
+        workerId: WORKER_KATO,
+        title: 'Timber for desk order',
+        category: 'Materials',
+        amount: 180000,
+        relatedOrderId: 'ord_seed_2',
+        date: daysFromNow(-6),
+        notes: 'Bought from local timber yard',
+      },
+    ],
+    onboardingDone: false,
+  }
+}
+
+export const DEMO_BANNER =
+  'Demo environment — all workers, jobs, and prices are fictional sample data.'
