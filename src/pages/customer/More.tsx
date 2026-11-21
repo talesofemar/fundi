@@ -195,7 +195,7 @@ export function RequestQuote() {
 }
 
 export function SavedWorkers() {
-  const { state, isSaved, getWorker, toggleSaved } = useApp()
+  const { state, isSaved, toggleSaved } = useApp()
   const navigate = useNavigate()
   const saved = state.workers.filter((w) => isSaved(w.id))
 

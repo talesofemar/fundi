@@ -43,7 +43,7 @@ const WORKER_QUICK = 'wrk_quickfix'
 export const DEMO_WORKER_ID = WORKER_KATO
 export const DEMO_CUSTOMER = DEMO_CUSTOMER_ID
 
-function portfolio(
+function makePortfolio(
   workerId: string,
   title: string,
   category: string,
@@ -179,13 +179,13 @@ export function createSeedState(): AppState {
   ]
 
   const portfolio: PortfolioProject[] = [
-    portfolio(WORKER_KATO, 'Three-door mahogany wardrobe', 'Carpenter', 'Custom wardrobe with drawers and hanging space for a Wakiso family home.', ['1B3A4B', 'F4F1EC']),
-    portfolio(WORKER_KATO, 'Office desks for a small shop', 'Carpenter', 'Two sturdy desks with cable holes and drawers.', ['2C4A3E', 'F8F6F2']),
-    portfolio(WORKER_AMINA, 'Bridal gown with kitenge accents', 'Tailor', 'Fitted gown with hand-finished details for a Kampala wedding.', ['8B3A2A', 'FDF8F4']),
-    portfolio(WORKER_AMINA, 'School uniform set', 'Tailor', 'Bulk uniform order for a nursery class.', ['3A5A7A', 'F5F7FA']),
-    portfolio(WORKER_BRIGHT, 'Two-room extension', 'Builder', 'Block extension with plastered walls and new roof section.', ['4A3A2A', 'F7F5F0']),
-    portfolio(WORKER_SAFE, 'Full flat rewiring', 'Electrician', 'Safe rewiring and new sockets for a rented flat in Ntinda.', ['1E3A5C', 'F4F7FB']),
-    portfolio(WORKER_QUICK, 'Bathroom pipe replacement', 'Plumber', 'Replaced leaking pipes and fitted a new shower mixer.', ['1A4A4A', 'F3F8F7']),
+    makePortfolio(WORKER_KATO, 'Three-door mahogany wardrobe', 'Carpenter', 'Custom wardrobe with drawers and hanging space for a Wakiso family home.', ['1B3A4B', 'F4F1EC']),
+    makePortfolio(WORKER_KATO, 'Office desks for a small shop', 'Carpenter', 'Two sturdy desks with cable holes and drawers.', ['2C4A3E', 'F8F6F2']),
+    makePortfolio(WORKER_AMINA, 'Bridal gown with kitenge accents', 'Tailor', 'Fitted gown with hand-finished details for a Kampala wedding.', ['8B3A2A', 'FDF8F4']),
+    makePortfolio(WORKER_AMINA, 'School uniform set', 'Tailor', 'Bulk uniform order for a nursery class.', ['3A5A7A', 'F5F7FA']),
+    makePortfolio(WORKER_BRIGHT, 'Two-room extension', 'Builder', 'Block extension with plastered walls and new roof section.', ['4A3A2A', 'F7F5F0']),
+    makePortfolio(WORKER_SAFE, 'Full flat rewiring', 'Electrician', 'Safe rewiring and new sockets for a rented flat in Ntinda.', ['1E3A5C', 'F4F7FB']),
+    makePortfolio(WORKER_QUICK, 'Bathroom pipe replacement', 'Plumber', 'Replaced leaking pipes and fitted a new shower mixer.', ['1A4A4A', 'F3F8F7']),
   ]
 
   return {
